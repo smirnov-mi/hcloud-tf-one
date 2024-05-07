@@ -11,7 +11,7 @@ module "base" {
   
   bastion ={
     name = "bastion"
-    server_type = "cx31"
+    server_type = "cx11"
     private_ip   = "10.0.0.2"    
   }
   network_name="mycluster-main"
