@@ -15,7 +15,7 @@ resource "hcloud_network_subnet" "private_subnet" {
 
 resource "hcloud_server" "bastion" {
   name        = var.bastion.name
-  image       = "ubuntu-20.04" 
+  image       = "ubuntu-24.04" 
   server_type = var.bastion.server_type
   location    = var.hcloud_location
   ssh_keys    = ["access1"]
