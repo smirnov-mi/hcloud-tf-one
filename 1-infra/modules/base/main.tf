@@ -27,3 +27,7 @@ resource "hcloud_server_network" "server_network_bastion" {
   ip         = var.bastion.private_ip
 }
 
+resource "hcloud_ssh_key" "default" {
+  name       = "access1"
+  public_key = file("~/.ssh/id_rsa.pub")
+}
