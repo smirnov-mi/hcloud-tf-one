@@ -45,6 +45,7 @@ resource "hcloud_server_network" "server_network" {
   ip         = each.value.private_ip
 }
 
+
 resource "hcloud_load_balancer" "load_balancer" {
   name       = "${var.cluster_name}-lb"
   load_balancer_type = var.load_balancer.type
@@ -58,12 +59,23 @@ resource "hcloud_load_balancer" "load_balancer" {
   #}
 }
 
+resource "hcloud_load_balancer_network" "server_network_lb" {
+  load_balancer_id = hcloud_load_balancer.load_balancer.id
+  network_id = data.hcloud_network.private_net.id
+  ip = var.load_balancer.private_ip
+}
+
 resource "hcloud_load_balancer_target" "load_balancer_target" {
   type             = "label_selector"
   use_private_ip   = true
   load_balancer_id = hcloud_load_balancer.load_balancer.id
   #server_id        = hcloud_server.my_server.id
   label_selector   = "lb=lb-prod1"
+  depends_on = [
+    data.hcloud_network.private_net,
+    hcloud_load_balancer.load_balancer,
+    hcloud_load_balancer_network.server_network_lb
+  ]
 }
 
 resource "hcloud_load_balancer_service" "load_balancer_service" {
@@ -86,9 +98,3 @@ resource "hcloud_load_balancer_service" "load_balancer_service2" {
   destination_port = 443
 }
 
-
-resource "hcloud_load_balancer_network" "server_network_lb" {
-  load_balancer_id = hcloud_load_balancer.load_balancer.id
-  network_id = data.hcloud_network.private_net.id
-  ip = var.load_balancer.private_ip
-}
