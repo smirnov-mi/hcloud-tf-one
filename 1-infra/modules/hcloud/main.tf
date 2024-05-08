@@ -14,6 +14,7 @@ resource "hcloud_server" "cloud_nodes" {
   #user_data = file("${path.module}/cloud-config.yaml")
   labels = {
         "env" = "prod"
+        "lb" = "lb-prod1"
   }
   network {
     network_id = data.hcloud_network.private_net.id
@@ -39,7 +40,6 @@ resource "hcloud_volume" "volumes" {
 
 resource "hcloud_server_network" "server_network" {
   for_each = var.nodes
-
   network_id = data.hcloud_network.private_net.id
   server_id  = hcloud_server.cloud_nodes[each.key].id
   ip         = each.value.private_ip
