@@ -49,16 +49,23 @@ resource "hcloud_load_balancer" "load_balancer" {
   name       = "${var.cluster_name}-lb"
   load_balancer_type = var.load_balancer.type
   location   = var.hcloud_location
-  dynamic "target"{
-    for_each = var.nodes
-    content{
-      type = "server"
-      server_id= hcloud_server.cloud_nodes[target.key].id
-    }
-  }
+  #dynamic "target"{
+  #  for_each = var.nodes
+  #  content{
+  #    type = "server"
+  #    server_id= hcloud_server.cloud_nodes[target.key].id
+  #  }
+  #}
 }
 
-# SHOULD USE: hcloud_load_balancer_target
+resource "hcloud_load_balancer_target" "load_balancer_target" {
+  type             = "label_selector"
+  use_private_ip   = true
+  load_balancer_id = hcloud_load_balancer.load_balancer.id
+  #server_id        = hcloud_server.my_server.id
+  label_selector   = "lb=lb-prod1"
+}
+
 
 resource "hcloud_load_balancer_network" "server_network_lb" {
   load_balancer_id = hcloud_load_balancer.load_balancer.id

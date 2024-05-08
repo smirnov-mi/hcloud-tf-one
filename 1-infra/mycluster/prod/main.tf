@@ -14,21 +14,21 @@ module "cluster" {
     nodes = {
         1 = {
             name = "node1"
-            server_type = "cx21"
+            server_type = "cx11"
             private_ip   = "10.0.0.5"
         }
         
         2 = {
             name = "node2"
-            server_type = "cx21"
+            server_type = "cx11"
             private_ip   = "10.0.0.6"
         }
         
-        3 = {
-            name = "node3"
-            server_type = "cx21"
-            private_ip   = "10.0.0.7"
-        }
+        #3 = {
+        #    name = "node3"
+        #    server_type = "cx21"
+        #    private_ip   = "10.0.0.7"
+        #}
     }
 
     load_balancer = {
