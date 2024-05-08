@@ -66,6 +66,26 @@ resource "hcloud_load_balancer_target" "load_balancer_target" {
   label_selector   = "lb=lb-prod1"
 }
 
+resource "hcloud_load_balancer_service" "load_balancer_service" {
+  load_balancer_id = hcloud_load_balancer.load_balancer.id
+  protocol         = "http"
+  listen_port      = 80
+  destination_port = 80
+
+  http {
+    sticky_sessions = true
+    cookie_name     = "EXAMPLE_STICKY"
+  }
+}
+
+
+resource "hcloud_load_balancer_service" "load_balancer_service2" {
+  load_balancer_id = hcloud_load_balancer.load_balancer.id
+  protocol         = "http"
+  listen_port      = 443
+  destination_port = 443
+}
+
 
 resource "hcloud_load_balancer_network" "server_network_lb" {
   load_balancer_id = hcloud_load_balancer.load_balancer.id
