@@ -7,7 +7,7 @@ resource "hcloud_server" "cloud_nodes" {
   for_each = var.nodes
 
   name        = each.value.name
-  image       = "ubuntu-24.04"
+  image       = var.hcloud_image
   server_type = each.value.server_type
   location    = var.hcloud_location
   ssh_keys    = ["access1"]
@@ -33,7 +33,7 @@ resource "hcloud_volume" "volumes" {
   for_each = var.nodes
 
   name = "${each.value.name}-volx"
-  size = 10
+  size = var.volume_size
   server_id = hcloud_server.cloud_nodes[each.key].id
   automount = false
 }

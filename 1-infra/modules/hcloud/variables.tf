@@ -19,6 +19,7 @@ variable "load_balancer" {
 
 variable "network_name" {
   type=string
+  default = "cluster-network"
 }
 
 variable "hcloud_location" {
@@ -26,4 +27,12 @@ variable "hcloud_location" {
   default = "nbg1"
 }
 
+variable "hcloud_image" {
+  type=string
+  default = "ubuntu-24.04"
+}
 
+variable "volume_size" {
+  type=number
+  default = 10
+}
