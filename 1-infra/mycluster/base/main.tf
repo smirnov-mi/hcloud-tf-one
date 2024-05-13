@@ -14,7 +14,7 @@ module "base" {
     server_type = "cx11"
     private_ip   = "10.0.0.2"    
   }
-  network_name="mycluster-main"
+  network_name="cluster-main"
 }
 
 output "bastion_ip"{

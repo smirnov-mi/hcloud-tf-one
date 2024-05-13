@@ -9,7 +9,7 @@ module "cluster" {
     source = "../../modules/hcloud"
     
     cluster_name = "prod"
-    network_name = "mycluster-main"
+    network_name = "cluster-main"
 
     nodes = {
         1 = {
