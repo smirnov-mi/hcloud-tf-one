@@ -15,7 +15,7 @@ resource "hcloud_network_subnet" "private_subnet" {
 
 resource "hcloud_server" "bastion" {
   name        = var.bastion.name
-  image       = "ubuntu-24.04" 
+  image       = "ubuntu-22.04"
   server_type = var.bastion.server_type
   location    = var.hcloud_location
   ssh_keys    = ["access1"]
@@ -30,4 +30,10 @@ resource "hcloud_server_network" "server_network_bastion" {
 resource "hcloud_ssh_key" "default" {
   name       = "access1"
   public_key = file("~/.ssh/id_rsa.pub")
+}
+
+resource "hcloud_network_route" "NAT-route" {
+  network_id  = hcloud_network.private_net.id
+  destination = "0.0.0.0/0"
+  gateway     = var.bastion.private_ip
 }
